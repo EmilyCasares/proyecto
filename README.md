@@ -1,52 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>App de Recomendación de Películas</title>
-</head>
-<body>
+# Generador de historias con IA en Python
 
-    <h2>Recomendador de Películas 🎬</h2>
+Aplicación hecha con **Python + Streamlit** para crear historias en español usando la API de OpenAI.
 
-    <label>Escribe tu género favorito:</label>
-    <input type="text" id="generoInput">
-    <button onclick="recomendar()">Recomendar</button>
+> Nota: esta app **genera historias**; no es una app de recomendaciones.
 
-    <h3>Recomendaciones:</h3>
-    <ul id="resultado"></ul>
+## Requisitos
 
-    <script>
-        const generos = ["Ciencia Ficcion", "Animacion", "Drama", "Accion", "Comedia"];
-        const peliculas = [];
+- Python 3.10+
+- Clave de API de OpenAI
 
-        // Generar 10 000 películas automáticamente
-        for (let i = 1; i <= 10000; i++) {
-            let generoAleatorio = generos[Math.floor(Math.random() * generos.length)];
-            peliculas.push({
-                titulo: "Pelicula " + i,
-                genero: generoAleatorio
-            });
-        }
+## Instalación
 
-        function recomendar() {
-            const generoUsuario = document.getElementById("generoInput").value;
-            const lista = document.getElementById("resultado");
-            lista.innerHTML = "";
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-            const recomendaciones = peliculas.filter(p =>
-                p.genero.toLowerCase() === generoUsuario.toLowerCase()
-            );
+## Configuración
 
-            if (recomendaciones.length > 0) {
-                recomendaciones.slice(0, 20).forEach(p => { // solo muestra 20 para que no se trabe
-                    const li = document.createElement("li");
-                    li.textContent = p.titulo;
-                    lista.appendChild(li);
-                });
-            } else {
-                lista.innerHTML = "<li>No se encontraron recomendaciones</li>";
-            }
-        }
-    </script>
+Variables de entorno:
 
-</body>
-</html>
+```bash
+export OPENAI_API_KEY="tu_api_key"
+# Opcional: cambiar modelo por defecto (gpt-4.1-mini)
+export OPENAI_MODEL="gpt-4.1-mini"
+```
+
+## Ejecutar
+
+```bash
+streamlit run app.py
+```
+
+Luego abre la URL local que muestra Streamlit (normalmente `http://localhost:8501`).
+
+## Funciones incluidas
+
+- Parámetros narrativos: protagonista, género, tono, extensión y detalles opcionales.
+- Opción para incluir título automáticamente.
+- Control de creatividad (temperatura).
+- Descarga de la historia generada en `.txt`.
